@@ -1,4 +1,18 @@
-import javax.swing.*;
+/*QUESTÃO INICIAL:
+Um elevador é puxado para cima por um cabo. O elevador e seu único ocupante têm uma massa toal de 2000 kg. 
+Quando o ocupante deixa cair uma moeda, a aceleração da moeda em relação ao elevador é 8,00 m/s2 para baixo. 
+Qual é a tensão do cabo? 
+
+ALTERAÇÕES PARA A DIFICULTAÇÃO DO CÓDIGO:
+- O elevador possui um peso fixo (2000kg)
+- Peso médio por pessoa que entrará no elevador (75kg), usado para os cálculos futuros
+- Número de pessoas no elevador
+- Caso a quantidade de pessoas seja entre 0 e 8, calcula a tensão normalmente, 9 a 12 calcula a tensão e exibe mensagem de superlotação,
+mais que 12 não calcula a tensão pois o cabo quebra. Valores negativos não serão aceitos
+ -Aceleração da moeda é um valor aleatório entre 1.0 e 2.5
+ - No final será mostrado a tensão do cabo e a aceleração do elevador*/
+
+ import javax.swing.*;
  import java.awt.*;
  import java.awt.event.ActionEvent;
  import java.awt.event.ActionListener;
