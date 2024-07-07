@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1714052414 source:c:\users\rayss\onedrive\Área de trabalho\rayssa\unespar\disciplinas\org. estr. de dados\aula 25-04\quadradocubonum\qc.c
+	<stdio.h>
+	<stdlib.h>
+	"QC.h"
+
+1714052362 c:\users\rayss\onedrive\Área de trabalho\rayssa\unespar\disciplinas\org. estr. de dados\aula 25-04\quadradocubonum\qc.h
+
+1714052611 source:c:\users\rayss\onedrive\Área de trabalho\rayssa\unespar\disciplinas\org. estr. de dados\aula 25-04\quadradocubonum\main.c
+	<stdio.h>
+	<stdlib.h>
+	"QC.h"
+

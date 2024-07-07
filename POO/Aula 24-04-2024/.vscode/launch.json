@@ -1,0 +1,57 @@
+{
+    // Use o IntelliSense para saber mais sobre os atributos possíveis.
+    // Focalizar para exibir as descrições dos atributos existentes.
+    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Ex5",
+            "request": "launch",
+            "mainClass": "Ex5",
+            "projectName": "Aula 24-04-2024_5bd63313"
+        },
+        {
+            "type": "java",
+            "name": "Ex1",
+            "request": "launch",
+            "mainClass": "Ex1",
+            "projectName": "Aula 24-04-2024_5bd63313"
+        },
+        {
+            "type": "java",
+            "name": "Ex4",
+            "request": "launch",
+            "mainClass": "Ex4",
+            "projectName": "Aula 24-04-2024_80be3af3"
+        },
+        {
+            "type": "java",
+            "name": "Ex7",
+            "request": "launch",
+            "mainClass": "Ex7",
+            "projectName": "Aula 24-04-2024_80be3af3"
+        },
+        {
+            "type": "java",
+            "name": "MenuPrincipal",
+            "request": "launch",
+            "mainClass": "MenuPrincipal",
+            "projectName": "Aula 24-04-2024_80be3af3"
+        },
+        {
+            "type": "java",
+            "name": "teste",
+            "request": "launch",
+            "mainClass": "teste",
+            "projectName": "Aula 24-04-2024_80be3af3"
+        },
+        {
+            "type": "java",
+            "name": "Exercicio003",
+            "request": "launch",
+            "mainClass": "Exercicio003",
+            "projectName": "Aula 24-04-2024_80be3af3"
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1714048565 source:c:\users\rayss\onedrive\Área de trabalho\rayssa\unespar\disciplinas\org. estr. de dados\aula 25-04\retangulo\retan.c
+	<stdio.h>
+	<stdlib.h>
+	"retan.h"
+
+1714047729 c:\users\rayss\onedrive\Área de trabalho\rayssa\unespar\disciplinas\org. estr. de dados\aula 25-04\retangulo\retan.h
+
+1714048571 source:c:\users\rayss\onedrive\Área de trabalho\rayssa\unespar\disciplinas\org. estr. de dados\aula 25-04\retangulo\main.c
+	<stdio.h>
+	<stdlib.h>
+	"retan.h"
+

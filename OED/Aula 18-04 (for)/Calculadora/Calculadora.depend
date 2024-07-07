@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1714045941 source:c:\users\rayss\onedrive\Área de trabalho\rayssa\unespar\disciplinas\org. estr. de dados\aula 18-04\calculadora\main.c
+	<stdio.h>
+	<stdlib.h>
+	"calc.h"
+
+1714046032 c:\users\rayss\onedrive\Área de trabalho\rayssa\unespar\disciplinas\org. estr. de dados\aula 18-04\calculadora\calc.h
+
+1714045930 source:c:\users\rayss\onedrive\Área de trabalho\rayssa\unespar\disciplinas\org. estr. de dados\aula 18-04\calculadora\calc.c
+	"calc.h"
+	<stdio.h>
+	<stdlib.h>
+
