@@ -1,0 +1,7 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar", "C:/jfreechart-1.0.19/jfreechart-1.0.19-demo.jar"
+    ]
+}
