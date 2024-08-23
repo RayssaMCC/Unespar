@@ -1,17 +1,9 @@
-import javax.swing.*;
-import java.awt.event.ActionEvent;
+import javax.swing.*; 
+import java.awt.*; 
+import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import java.awt.*;
 
-public class CalculoCargaProjecao {
-
+public class CalculoCargaGraphics {
     public static void main(String[] args) {
         //Criação da janela principal
         JFrame frame = new JFrame("Calculadora e Simulação de Carga Q");
@@ -34,7 +26,7 @@ public class CalculoCargaProjecao {
         fieldVelocidade.setBounds(220, 110, 165, 25);
         frame.add(fieldVelocidade);
 
-        JLabel labelRaio = new JLabel("Distância ao longo do eixo x (m):");
+        JLabel labelRaio = new JLabel("Raio (m):");
         labelRaio.setBounds(10, 80, 200, 25);
         frame.add(labelRaio);
         JTextField fieldRaio = new JTextField("0.2");
@@ -61,20 +53,9 @@ public class CalculoCargaProjecao {
         frame.add(buttonCalcular);
 
         //Criação do gráfico de movimento da partícula
-        XYSeries series = new XYSeries("Movimento Circular");
-        XYSeriesCollection dataset = new XYSeriesCollection(series);
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Trajetória da Partícula",
-                "Posição X (m)","Posição Y (m)",
-                dataset, PlotOrientation.VERTICAL,
-                true,true,false);
-
-        XYPlot plot = chart.getXYPlot();
-        plot.getRenderer().setSeriesPaint(0, Color.RED);
-
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setBounds(10, 230, 760, 300);
-        frame.add(chartPanel);
+        ParticlePanel particlePanel = new ParticlePanel();
+        particlePanel.setBounds(10, 230, 760, 300);
+        frame.add(particlePanel);
 
         //Ação do botão de cálculo
         buttonCalcular.addActionListener(new ActionListener() {
@@ -101,12 +82,12 @@ public class CalculoCargaProjecao {
                 //Configuração do gráfico
                 if (timer != null) {
                     timer.stop();
-                    series.clear();
+                    particlePanel.clear();
                 }
                 timer = new Timer(16, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        theta += v / r * 0.016;
+                        theta += ((v/100) / r) * 0.08;
                         if (theta > 2 * Math.PI) {
                             theta -= 2 * Math.PI;
                         }
@@ -114,17 +95,41 @@ public class CalculoCargaProjecao {
                         double x = r * Math.cos(theta);
                         double y = r * Math.sin(theta);
 
-                        series.add(x, y);
-                        if (series.getItemCount() > 1000) {
-                            series.remove(0);
-                        }
+                        particlePanel.setPoint(x, y);
+                        particlePanel.repaint();
                     }
                 });
                 timer.start();
             }
         });
-
         //Exibe a janela
         frame.setVisible(true);
+    }
+
+    //Classe para desenhar a partícula em movimento
+    static class ParticlePanel extends JPanel {
+        private Point ponto = new Point();
+        private Point centro = new Point();
+
+        public void setPoint(double x, double y) {
+            ponto.setLocation((int) (x * 100 + getWidth() / 2), (int) (y * 100 + getHeight() / 2));
+        }
+
+        public void clear() {
+            ponto.setLocation(0, 0);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            //Desenha a partícula
+            g.setColor(Color.RED);
+            g.fillOval(ponto.x, ponto.y, 5, 5);
+
+            //Desenha o centro
+            centro.setLocation(getWidth() / 2, getHeight() / 2);
+            g.setColor(Color.BLUE);
+            g.fillOval(centro.x - 5, centro.y - 5, 7, 7);
+        }
     }
 }
