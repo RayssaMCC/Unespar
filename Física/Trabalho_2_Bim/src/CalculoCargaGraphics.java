@@ -15,28 +15,28 @@ public class CalculoCargaGraphics {
         JLabel labelMassa = new JLabel("Massa da partícula (kg):");
         labelMassa.setBounds(10, 20, 200, 25);
         frame.add(labelMassa);
-        JTextField fieldMassa = new JTextField("0.8");
+        JTextField fieldMassa = new JTextField();
         fieldMassa.setBounds(220, 20, 165, 25);
         frame.add(fieldMassa);
 
         JLabel labelVelocidade = new JLabel("Velocidade (m/s):");
         labelVelocidade.setBounds(10, 110, 200, 25);
         frame.add(labelVelocidade);
-        JTextField fieldVelocidade = new JTextField("50.0");
+        JTextField fieldVelocidade = new JTextField();
         fieldVelocidade.setBounds(220, 110, 165, 25);
         frame.add(fieldVelocidade);
 
         JLabel labelRaio = new JLabel("Raio (m):");
         labelRaio.setBounds(10, 80, 200, 25);
         frame.add(labelRaio);
-        JTextField fieldRaio = new JTextField("0.2");
+        JTextField fieldRaio = new JTextField();
         fieldRaio.setBounds(220, 80, 165, 25);
         frame.add(fieldRaio);
 
         JLabel labelCarga = new JLabel("Carga q (μC):");
         labelCarga.setBounds(10, 50, 200, 25);
         frame.add(labelCarga);
-        JTextField fieldCarga = new JTextField("4.0");
+        JTextField fieldCarga = new JTextField();
         fieldCarga.setBounds(220, 50, 165, 25);
         frame.add(fieldCarga);
 
@@ -64,42 +64,53 @@ public class CalculoCargaGraphics {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Obtenção dos valores de entrada
-                double m = Double.parseDouble(fieldMassa.getText());
-                double v = Double.parseDouble(fieldVelocidade.getText());
-                double r = Double.parseDouble(fieldRaio.getText());
-                double q = Double.parseDouble(fieldCarga.getText());
+                try {
+                    //Obtenção dos valores de entrada
+                    double m = Double.parseDouble(fieldMassa.getText());
+                    double v = Double.parseDouble(fieldVelocidade.getText());
+                    double r = Double.parseDouble(fieldRaio.getText());
+                    double q = Double.parseDouble(fieldCarga.getText());
 
-                //Constante eletrostática k
-                double k = 8.99e9;
-
-                //Cálculo de Q
-                double Q = (m * v * v * r) / (k * q);
-
-                //Exibição do resultado no campo de texto
-                fieldResultado.setText(String.format("%.6e", Q));
-
-                //Configuração do gráfico
-                if (timer != null) {
-                    timer.stop();
-                    particlePanel.clear();
-                }
-                timer = new Timer(16, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        theta += ((v/100) / r) * 0.08;
-                        if (theta > 2 * Math.PI) {
-                            theta -= 2 * Math.PI;
-                        }
-
-                        double x = r * Math.cos(theta);
-                        double y = r * Math.sin(theta);
-
-                        particlePanel.setPoint(x, y);
-                        particlePanel.repaint();
+                    // Verificação de valores inválidos
+                    if (m <= 0 || v <= 0 || r <= 0 || q <= 0) {
+                        throw new IllegalArgumentException("Todos os valores devem ser positivos.");
                     }
-                });
-                timer.start();
+
+                    //Constante eletrostática k
+                    double k = 8.99e9;
+
+                    //Cálculo de Q
+                    double Q = (m * v * v * r) / (k * q);
+
+                    //Exibição do resultado no campo de texto
+                    fieldResultado.setText(String.format("%.6e", Q));
+
+                    //Configuração do gráfico
+                    if (timer != null) {
+                        timer.stop();
+                        particlePanel.clear();
+                    }
+                    timer = new Timer(16, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            theta += ((v/100) / r) * 0.08;
+                            if (theta > 2 * Math.PI) {
+                                theta -= 2 * Math.PI;
+                            }
+
+                            double x = r * Math.cos(theta);
+                            double y = r * Math.sin(theta);
+
+                            particlePanel.setPoint(x, y);
+                            particlePanel.repaint();
+                        }
+                    });
+                    timer.start();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, insira valores numéricos válidos.", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage(), "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         //Exibe a janela
