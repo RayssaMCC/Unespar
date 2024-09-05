@@ -114,7 +114,7 @@ int main(){
     }
     printf("\n\n");
 
-    //Imprime e contar pares de acordo com a opção escolhida
+    //Imprime os valores em cada ordenação e mostra a quantidade de pares
     do{
         //Menu de opções
         printf("Escolha o metodo de impressao:\n");
