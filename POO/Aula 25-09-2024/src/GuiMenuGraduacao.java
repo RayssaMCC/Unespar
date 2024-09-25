@@ -81,7 +81,6 @@ public class GuiMenuGraduacao extends JPanel {
                     topFrame.setJMenuBar(menuBarPrincipal);
                     topFrame.revalidate();
                 }
-
             }
         });
         miMatricula.addActionListener(new ActionListener() {
@@ -113,6 +112,5 @@ public class GuiMenuGraduacao extends JPanel {
                 JOptionPane.showMessageDialog(null, "Abre Consulta de Matriculados");
             }
         });
-
     }
 }
