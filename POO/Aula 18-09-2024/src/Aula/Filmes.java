@@ -1,3 +1,4 @@
+package Aula;
 public class Filmes {
     private String codigo, titulo_pt, diretor, ano, pais, titulo_original, genero, imdb, produtora, dataCompra;
     public String getCodigo() {
