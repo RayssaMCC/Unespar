@@ -8,14 +8,13 @@ public class GuiMenuGraduacao extends JPanel {
 
     private JMenuBar mnBarra;
     private JMenu mnArquivo, mnCadastros, mnConsultas;
-    private JMenuItem miSair, miMatricula,miCurso,miDepartamento,miMatriculados;
+    private JMenuItem miSair, miMatricula, miCurso, miDepartamento, miMatriculados, miDisciplinas;
     private Container parentContainer;
     private JMenuBar menuBarPrincipal; // Referência ao menu principal
 
     public GuiMenuGraduacao(Container parent, JMenuBar menuPrincipal ) {
         this.parentContainer = parent;
         this.menuBarPrincipal = menuPrincipal; // Guarda o menu principal
-        inicializarComponentes();
         inicializarComponentes();
         definirEventos();
     }
@@ -40,6 +39,7 @@ public class GuiMenuGraduacao extends JPanel {
         miMatricula.setMnemonic('M');
         miCurso = new JMenuItem("Curso");
         miDepartamento = new JMenuItem("Departamento");
+        miDisciplinas = new JMenuItem("Disciplinas"); // Novo item de menu
         //Consultas
         miMatriculados = new JMenuItem("Matriculados");
         miMatriculados.setMnemonic('D');
@@ -49,16 +49,18 @@ public class GuiMenuGraduacao extends JPanel {
         mnCadastros.add(miMatricula);
         mnCadastros.add(miCurso);
         mnCadastros.add(miDepartamento);
+        mnCadastros.add(miDisciplinas); // Adiciona o novo item de menu
         mnConsultas.add(miMatriculados);
         mnBarra.add (mnArquivo);
         mnBarra.add(mnCadastros);
         mnBarra.add(mnConsultas);
         add(new JLabel("Sistema de Graduação", JLabel.CENTER), BorderLayout.CENTER);
-
     }
+
     public JMenuBar getMenuBar() {
         return mnBarra;
     }
+
     private void definirEventos() {
         miSair.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -85,17 +87,25 @@ public class GuiMenuGraduacao extends JPanel {
         });
         miMatricula.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Abre Cadastro de Matrícula");
+                
             }
         });
         miCurso.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Abre Cadastro de Curso");
+                
+                // Limpa o contentPane para remover os componentes existentes
+                parentContainer.removeAll();
+                // Adiciona o novo painel GuiCadastroCurso
+                GuiCadastroCursos guiCadastroCursos = new GuiCadastroCursos();
+                parentContainer.add(guiCadastroCursos, BorderLayout.CENTER);
+                // Revalida e repinta o contentPane para garantir que o novo painel seja mostrado
+                parentContainer.revalidate();
+                parentContainer.repaint();
             }
         });
         miDepartamento.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Abre Cadastro de Departamento");
+                
                 // Limpa o contentPane para remover os componentes existentes
                 parentContainer.removeAll();
                 // Adiciona o novo painel GuiCadastroDepartamentos
@@ -106,10 +116,22 @@ public class GuiMenuGraduacao extends JPanel {
                 parentContainer.repaint();
             }
         });
-
+        miDisciplinas.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                // Limpa o contentPane para remover os componentes existentes
+                parentContainer.removeAll();
+                // Adiciona o novo painel GuiCadastroDisciplinas
+                GuiCadastroDisciplina guiCadastroDisciplinas = new GuiCadastroDisciplina();
+                parentContainer.add(guiCadastroDisciplinas, BorderLayout.CENTER);
+                // Revalida e repinta o contentPane para garantir que o novo painel seja mostrado
+                parentContainer.revalidate();
+                parentContainer.repaint();
+            }
+        });
         miMatriculados.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Abre Consulta de Matriculados");
+                
             }
         });
     }

@@ -19,7 +19,6 @@ public class Departamentos {
         this.deptoSigla = deptoSigla;
     }
 
-
     public String getDeptoNome() {
         return deptoNome;
     }

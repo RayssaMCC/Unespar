@@ -1,4 +1,5 @@
 import java.sql.*;
+
 public class DepartamentosDAO {
     public Departamentos departamento;
     public BD bd;
@@ -7,10 +8,10 @@ public class DepartamentosDAO {
     private String men, sql;
     public static final byte INCLUSAO = 1;
     public static final byte ALTERACAO = 2;
-    public static final byte EXCLUSAO =3;
+    public static final byte EXCLUSAO = 3;
 
     public DepartamentosDAO() {
-        bd = new BD ();
+        bd = new BD();
         departamento = new Departamentos();
     }
 
@@ -36,23 +37,20 @@ public class DepartamentosDAO {
         men = "Operação realizada com sucesso!";
         try {
             if (operacao == INCLUSAO) {
-                sql = "insert into contas values (?,?,?,?)";
+                sql = "insert into departamentos values (?,?,?,?)";
                 statement = bd.connection.prepareStatement(sql);
-                statement.setInt(1,departamento.getDeptoCodigo());
-                statement.setString(2,departamento.getDeptoSigla());
-                statement.setString(3,departamento.getDeptoNome());
-                statement.setString(4,departamento.getDeptoDiretor());
+                statement.setInt(1, departamento.getDeptoCodigo());
+                statement.setString(2, departamento.getDeptoSigla());
+                statement.setString(3, departamento.getDeptoNome());
+                statement.setString(4, departamento.getDeptoDiretor());
 
             } else if (operacao == ALTERACAO) {
-                sql = "update departamentos set depto_codigo = ?, depto_sigla = ?, depto_nome = ?"
-                        + "depto_diretor = ?";
-
+                sql = "update departamentos set depto_sigla = ?, depto_nome = ?, depto_diretor = ? where depto_codigo = ?";
                 statement = bd.connection.prepareStatement(sql);
-                statement.setInt(4,departamento.getDeptoCodigo());
                 statement.setString(1, departamento.getDeptoSigla());
                 statement.setString(2, departamento.getDeptoNome());
                 statement.setString(3, departamento.getDeptoDiretor());
-
+                statement.setInt(4, departamento.getDeptoCodigo());
 
             } else if (operacao == EXCLUSAO) {
                 sql = "delete from departamentos where depto_codigo = ?";
@@ -60,7 +58,7 @@ public class DepartamentosDAO {
                 statement.setInt(1, departamento.getDeptoCodigo());
             }
             if (statement.executeUpdate() == 0) {
-                men = "Falha na operacao!";
+                men = "Falha na operação!";
             }
         } catch (SQLException erro) {
             men = "Falha na operação " + erro.toString();

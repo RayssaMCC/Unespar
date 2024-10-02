@@ -154,8 +154,5 @@ public class GuiMenuSistema extends JFrame {
                 repaint();     // Redesenha o JFrame inteiro
             }
         });
-
-
-
     }
 }
