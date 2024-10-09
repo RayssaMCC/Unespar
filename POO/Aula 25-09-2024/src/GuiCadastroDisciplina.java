@@ -1,10 +1,13 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class GuiCadastroDisciplina extends JPanel {
     JLabel label1, label2, label3, label4, label5;
-    JButton btGravar, btAlterar, btExcluir, btNovo, btLocalizar, btCancelar, btSair;
-    static JTextField tfIDDisciplina, tfIDCurso, tfNome, tfCargaHoraria, tfAreaMateria;
+    JButton btGravar, btAlterar, btExcluir, btNovo, btLocalizar, btCancelar, btSair, btListar;
+    static JTextField tfIDDisciplina, tfNome, tfCargaHoraria, tfAreaMateria;
+    static JComboBox<String> cbCurso;
     private DisciplinaDAO disciplinaDAO;
 
     public GuiCadastroDisciplina() {
@@ -27,14 +30,14 @@ public class GuiCadastroDisciplina extends JPanel {
 
         tfIDDisciplina = new JTextField(8);
         tfIDDisciplina.setBounds(120, 10, 100, 20);
-        tfIDCurso = new JTextField(10);
-        tfIDCurso.setBounds(120, 40, 100, 20);
+        cbCurso = new JComboBox<>();
+        cbCurso.setBounds(120, 40, 300, 20);
         tfNome = new JTextField(50);
         tfNome.setBounds(120, 70, 300, 20);
         tfCargaHoraria = new JTextField(10);
         tfCargaHoraria.setBounds(120, 100, 100, 20);
         tfAreaMateria = new JTextField(30);
-        tfAreaMateria.setBounds(120, 130, 100, 20);
+        tfAreaMateria.setBounds(120, 130, 200, 20);
 
         btGravar = new JButton("Gravar");
         btGravar.setBounds(10, 170, 100, 20);
@@ -50,14 +53,16 @@ public class GuiCadastroDisciplina extends JPanel {
         btCancelar.setBounds(560, 170, 100, 20);
         btSair = new JButton("Sair");
         btSair.setBounds(670, 170, 100, 20);
+        btListar = new JButton("Lista de Disciplinas");
+        btListar.setBounds(10, 200, 150, 20);
 
         add(label1); add(tfIDDisciplina);
-        add(label2); add(tfIDCurso);
+        add(label2); add(cbCurso);
         add(label3); add(tfNome);
         add(label4); add(tfCargaHoraria);
         add(label5); add(tfAreaMateria);
         add(btNovo); add(btLocalizar); add(btGravar);
-        add(btAlterar); add(btExcluir); add(btCancelar); add(btSair);
+        add(btAlterar); add(btExcluir); add(btCancelar); add(btSair); add(btListar);
 
         setBotoes(true, true, false, false, false, false);
         disciplinaDAO = new DisciplinaDAO();
@@ -65,6 +70,7 @@ public class GuiCadastroDisciplina extends JPanel {
             JOptionPane.showMessageDialog(null, "Falha na conexão, o sistema será fechado!");
             System.exit(0);
         }
+        carregarCursos();
     }
 
     public void definirEventos() {
@@ -96,7 +102,7 @@ public class GuiCadastroDisciplina extends JPanel {
                     return;
                 }
                 disciplinaDAO.disciplina.setID_disciplina(tfIDDisciplina.getText());
-                disciplinaDAO.disciplina.setID_curso(tfIDCurso.getText());
+                disciplinaDAO.disciplina.setID_curso((String) cbCurso.getSelectedItem());
                 disciplinaDAO.disciplina.setNome(tfNome.getText());
                 disciplinaDAO.disciplina.setCarga_horaria(Integer.parseInt(tfCargaHoraria.getText()));
                 disciplinaDAO.disciplina.setArea_materia(tfAreaMateria.getText());
@@ -108,7 +114,7 @@ public class GuiCadastroDisciplina extends JPanel {
         btAlterar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 disciplinaDAO.disciplina.setID_disciplina(tfIDDisciplina.getText());
-                disciplinaDAO.disciplina.setID_curso(tfIDCurso.getText());
+                disciplinaDAO.disciplina.setID_curso((String) cbCurso.getSelectedItem());
                 disciplinaDAO.disciplina.setNome(tfNome.getText());
                 disciplinaDAO.disciplina.setCarga_horaria(Integer.parseInt(tfCargaHoraria.getText()));
                 disciplinaDAO.disciplina.setArea_materia(tfAreaMateria.getText());
@@ -133,11 +139,17 @@ public class GuiCadastroDisciplina extends JPanel {
                 atualizarCampos();
             }
         });
+
+        btListar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                listarDisciplinas();
+            }
+        });
     }
 
     public void limparCampos() {
         tfIDDisciplina.setText("");
-        tfIDCurso.setText("");
+        cbCurso.setSelectedIndex(-1);
         tfNome.setText("");
         tfCargaHoraria.setText("");
         tfAreaMateria.setText("");
@@ -148,7 +160,7 @@ public class GuiCadastroDisciplina extends JPanel {
     public void atualizarCampos() {
         disciplinaDAO.disciplina.setID_disciplina(tfIDDisciplina.getText());
         if (disciplinaDAO.localizar()) {
-            tfIDCurso.setText(disciplinaDAO.disciplina.getID_curso());
+            cbCurso.setSelectedItem(disciplinaDAO.disciplina.getID_curso());
             tfNome.setText(disciplinaDAO.disciplina.getNome());
             tfCargaHoraria.setText(String.valueOf(disciplinaDAO.disciplina.getCarga_horaria()));
             tfAreaMateria.setText(disciplinaDAO.disciplina.getArea_materia());
@@ -166,5 +178,29 @@ public class GuiCadastroDisciplina extends JPanel {
         btAlterar.setEnabled(bAlterar);
         btExcluir.setEnabled(bExcluir);
         btCancelar.setEnabled(bCancelar);
+    }
+
+    private void carregarCursos() {
+        List<String> cursos = disciplinaDAO.getCursos();
+        for (String curso : cursos) {
+            cbCurso.addItem(curso);
+        }
+    }
+
+    private void listarDisciplinas() {
+        List<Disciplina> disciplinas = disciplinaDAO.getDisciplinas();
+        String[] columnNames = {"ID Disciplina", "Nome"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        for (Disciplina d : disciplinas) {
+            Object[] row = {d.getID_disciplina(), d.getNome()};
+            model.addRow(row);
+        }
+
+        JTable table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setPreferredSize(new java.awt.Dimension(800, 500));
+
+        JOptionPane.showMessageDialog(null, scrollPane, "Lista de Disciplinas", JOptionPane.INFORMATION_MESSAGE);
     }
 }

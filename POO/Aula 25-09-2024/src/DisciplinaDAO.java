@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DisciplinaDAO {
     public Disciplina disciplina;
@@ -69,5 +71,41 @@ public class DisciplinaDAO {
             men = "Falha na operação " + erro.toString();
         }
         return men;
+    }
+
+    public List<String> getCursos() {
+        List<String> cursos = new ArrayList<>();
+        sql = "select ID_curso from cursos";
+        try {
+            statement = bd.connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                cursos.add(resultSet.getString("ID_curso"));
+            }
+        } catch (SQLException erro) {
+            men = "Falha na operação " + erro.toString();
+        }
+        return cursos;
+    }
+
+    public List<Disciplina> getDisciplinas() {
+        List<Disciplina> disciplinas = new ArrayList<>();
+        sql = "select * from disciplinas";
+        try {
+            statement = bd.connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Disciplina d = new Disciplina();
+                d.setID_disciplina(resultSet.getString(1));
+                d.setID_curso(resultSet.getString(2));
+                d.setNome(resultSet.getString(3));
+                d.setCarga_horaria(resultSet.getInt(4));
+                d.setArea_materia(resultSet.getString(5));
+                disciplinas.add(d);
+            }
+        } catch (SQLException erro) {
+            men = "Falha na operação " + erro.toString();
+        }
+        return disciplinas;
     }
 }
