@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
-import java.awt.*;
+
 public class GuiCadastroDepartamentos extends JPanel {
     JLabel label1, label2, label3, label4;
     JButton btGravar, btAlterar, btExcluir, btNovo, btLocalizar, btCancelar, btSair;
