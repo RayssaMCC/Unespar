@@ -249,7 +249,7 @@ public class GuiCadastroCursos extends JPanel {
             tfCarga.setText(String.valueOf(cursos.curso.getCargaHoraria()));
             cbTipo.setSelectedItem(cursos.curso.getTipoCurso());
             cbModalidade.setSelectedItem(cursos.curso.getModalidadeCurso());
-            cbCodigo.setSelectedItem(cursos.curso.getCodigoCurso());
+            cbCodigo.setSelectedItem(String.valueOf(cursos.curso.getCodigoCurso())); // Atualize o campo cbCodigo
             setBotoes(true, true, false, true, true, true);
         } else {
             JOptionPane.showMessageDialog(null, "Curso não encontrado!");

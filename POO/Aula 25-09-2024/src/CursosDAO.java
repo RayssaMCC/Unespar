@@ -1,4 +1,8 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JOptionPane;
 
 public class CursosDAO {
     public Cursos curso;
@@ -44,7 +48,7 @@ public class CursosDAO {
         men = "Operação realizada com sucesso!";
         try {
             if (operacao == INCLUSAO) {
-                sql = "INSERT INTO cursos (ID_curso, nome, carga_horaria, tipo, modalidade, codigo) VALUES (?, ?, ?, ?, ?, ?)";
+                sql = "INSERT INTO cursos (ID_curso, nome, carga_horaria, tipo, modalidade, depto_codigo) VALUES (?, ?, ?, ?, ?, ?)";
                 statement = bd.connection.prepareStatement(sql);
                 statement.setInt(1, curso.getIdCurso());
                 statement.setString(2, curso.getNomeCurso());
@@ -54,7 +58,7 @@ public class CursosDAO {
                 statement.setInt(6, curso.getCodigoCurso());
 
             } else if (operacao == ALTERACAO) {
-                sql = "UPDATE cursos SET nome = ?, carga_horaria = ?, tipo = ?, modalidade = ?, codigo = ? WHERE ID_curso = ?";
+                sql = "UPDATE cursos SET nome = ?, carga_horaria = ?, tipo = ?, modalidade = ?, depto_codigo = ? WHERE ID_curso = ?";
                 statement = bd.connection.prepareStatement(sql);
                 statement.setString(1, curso.getNomeCurso());
                 statement.setInt(2, curso.getCargaHoraria());
@@ -77,5 +81,20 @@ public class CursosDAO {
             men = "Falha na operação: " + erro.toString();
         }
         return men;
+    }
+
+    public List<String> getCursos() {
+        List<String> cursos = new ArrayList<>();
+        sql = "SELECT nome FROM cursos";
+        try {
+            statement = bd.connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                cursos.add(resultSet.getString("nome"));
+            }
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar cursos: " + erro.toString());
+        }
+        return cursos;
     }
 }
