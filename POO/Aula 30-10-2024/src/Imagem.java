@@ -1,0 +1,3 @@
+interface Imagem {
+    void display();
+}
