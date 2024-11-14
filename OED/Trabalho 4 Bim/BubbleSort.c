@@ -8,9 +8,9 @@ typedef struct {
     long long int movimentacoes;  //Contador de movimentações realizadas (long long int usado para suportar vetores grandes)
 } Estatisticas;
 
-//Função que implementa o algoritmo de ordenação Bubble Sort
+//Função que implementa o algoritmo de ordenação Bubble Sort (ordena o final do vetor primeiro, comparando com os valores da direita)
 void bubbleSort(int vet[], int n, Estatisticas *stats) {
-    for (int i = 0; i < n - 1; i++) {          //Laço externo percorre o array até o penúltimo elemento
+    for (int i = 0; i < n - 1; i++) {          //Laço externo percorre o vetor até o penúltimo elemento
         for (int j = 0; j < n - i - 1; j++) {  //Laço interno realiza comparações até o último elemento ordenado
             stats->comparacoes++;              //Incrementa o número de comparações
             if (vet[j] > vet[j + 1]) {         //Se o elemento atual é maior que o próximo, troca os elementos
@@ -24,12 +24,12 @@ void bubbleSort(int vet[], int n, Estatisticas *stats) {
     }
 }
 
-//Função que preenche o array com valores aleatórios (sem repetição)
+//Função que preenche o vetor com valores aleatórios (sem repetição)
 void preencherAleatorio(int vet[], int n) {
     for (int i = 0; i < n; i++) {
-        vet[i] = i + 1; //Preenche o array com valores de 1 até n, em ordem crescente
+        vet[i] = i + 1; //Preenche o vetor com valores de 1 até n, em ordem crescente
     }
-    for (int i = 0; i < n; i++) { //Embaralha o array
+    for (int i = 0; i < n; i++) { //Embaralha o vetor
         int j = rand() % n; //Gera uma posição aleatória entre 0 e n-1
         int temp = vet[i];
         vet[i] = vet[j];
@@ -37,17 +37,17 @@ void preencherAleatorio(int vet[], int n) {
     }
 }
 
-//Função que preenche o array com valores ordenados (1 a n)
+//Função que preenche o vetor com valores ordenados (1 a n)
 void preencherOrdenado(int vet[], int n) {
     for (int i = 0; i < n; i++) {
-        vet[i] = i + 1; //Preenche o array com valores em ordem crescente
+        vet[i] = i + 1; //Preenche o vetor com valores em ordem crescente
     }
 }
 
-//Função que preenche o array com valores em ordem decrescente (n a 1)
+//Função que preenche o vetor com valores em ordem decrescente (n a 1)
 void preencherInverso(int vet[], int n) {
     for (int i = 0; i < n; i++) {
-        vet[i] = n - i; //Preenche o array com valores em ordem decrescente
+        vet[i] = n - i; //Preenche o vetor com valores em ordem decrescente
     }
 }
 
@@ -61,7 +61,7 @@ void testarBubbleSort(int n) {
     printf("\nTestando com tamanho %d\n", n);
 
     //Teste com vetor preenchido de forma aleatória
-    preencherAleatorio(vet, n); //Preenche o array com valores aleatórios
+    preencherAleatorio(vet, n); //Preenche o vetor com valores aleatórios
     stats.comparacoes = 0;
     stats.movimentacoes = 0;
     inicio = clock();
@@ -71,7 +71,7 @@ void testarBubbleSort(int n) {
     printf("Aleatorio - Comparacoes de chaves: %lld, Movimentacoes de registros: %lld, Tempo de execucao: %f segundos\n", stats.comparacoes, stats.movimentacoes, tempo);
 
     //Teste com vetor preenchido de forma ordenada
-    preencherOrdenado(vet, n); //Preenche o array em ordem crescente
+    preencherOrdenado(vet, n); //Preenche o vetor em ordem crescente
     stats.comparacoes = 0;
     stats.movimentacoes = 0;
     inicio = clock();
@@ -81,7 +81,7 @@ void testarBubbleSort(int n) {
     printf("Ordenado - Comparacoes de chaves: %lld, Movimentacoes de registros: %lld, Tempo de execucao: %f segundos\n", stats.comparacoes, stats.movimentacoes, tempo);
 
     //Teste com vetor preenchido de forma inversamente ordenada
-    preencherInverso(vet, n); //Preenche o array em ordem decrescente
+    preencherInverso(vet, n); //Preenche o vetor em ordem decrescente
     stats.comparacoes = 0;
     stats.movimentacoes = 0;
     inicio = clock();
