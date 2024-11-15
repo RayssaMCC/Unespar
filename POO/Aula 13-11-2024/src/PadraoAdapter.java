@@ -66,8 +66,12 @@ class AudioPlayerAdapterDemo {
         
         audioPlayer.play("mp3", "song.mp3");
         audioPlayer.play("mp4", "video.mp4"); //Não é suportado pelo AudioPlayer original
+        audioPlayer.play("vlc", "video.vlc"); //Não é suportado pelo AudioPlayer original
 
         MediaPlayer mediaAdapter = new MediaAdapter("mp4");
         mediaAdapter.play("mp4", "video.mp4"); //Agora é suportado pelo Adapter
+
+        mediaAdapter = new MediaAdapter("vlc");
+        mediaAdapter.play("vlc", "video.vlc"); //Agora é suportado pelo Adapter
     }
 }
