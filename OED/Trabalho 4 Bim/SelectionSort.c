@@ -8,7 +8,7 @@ typedef struct {
     long long int movimentacoes;
 } Estatisticas;
 
-//Função que implementa o algoritmo de ordenação Selection Sort (ordena o menor valor primeiro, comparando com os valores restantes)
+//Função que implementa o algoritmo de ordenação Selection Sort (ordena o menor valor primeiro, passando por todo o vetor e comparando com os valores restantes)
 void selectionSort(int vet[], int n, Estatisticas *stats) {
     for (int i = 0; i < n - 1; i++) {          //Laço para cada posição do vetor até a penúltima posição
         int minIdx = i;                        //Define o índice mínimo inicial como a posição atual
