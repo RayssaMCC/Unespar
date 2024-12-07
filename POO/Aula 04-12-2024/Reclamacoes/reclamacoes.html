@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Cidadão - Problemas no Bairro</title>
+</head>
+<body>
+    <h1>Portal do Cidadão - Problemas no Bairro</h1>
+    <form action="reclamacoes.jsp" method="post">
+        <label for="endereco">Informe o endereço:</label>
+        <input type="text" id="endereco" name="endereco" required><br><br>
+        
+        <label for="tipo">Tipo de problema:</label>
+        <select id="tipo" name="tipo">
+            <option value="Buracos">Buracos</option>
+            <option value="Praça">Praça</option>
+            <option value="Policiamento">Policiamento</option>
+            <option value="Posto de Saúde">Posto de Saúde</option>
+        </select><br><br>
+        
+        <label for="descricao">Relate o Problema:</label><br>
+        <textarea id="descricao" name="descricao" rows="5" cols="40" required></textarea><br><br>
+        
+        <button type="submit">Enviar</button>
+        <button type="reset">Limpar</button>
+    </form>
+</body>
+</html>
