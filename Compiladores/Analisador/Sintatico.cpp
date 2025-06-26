@@ -1,3 +1,5 @@
+//Analoiador léxico e sintático - Marielly e Rayssa
+
 #include <iostream>
 #include <iomanip> // Para formatação da saída
 #include <fstream>
@@ -325,7 +327,7 @@ NoSintatico* bloco() {
             NoSintatico* num2 = terminal("Numero");
             if(!num2){
                 delete noBloco;
-                cout<<"Erro sintatico: fucao Bloco, espera-se um Numero apos a ,\n";
+                cout<<"Erro sintatico: funcao Bloco, espera-se um Numero apos a ,\n";
                 return nullptr;
             }
             noBloco->filhos.push_back(num2);
@@ -420,7 +422,7 @@ NoSintatico* bloco() {
             NoSintatico* pontoVirgula = terminal("Simbolo Simples", ";");
             if(!pontoVirgula){
                 delete noBloco;
-                cout<<"Erro sintatico: funcao Bloco, espera-se um ; apos tipo()\n";
+                cout<<"Erro sintatico: funcao Bloco var, espera-se um ; apos tipo()\n";
                 return nullptr;
             }
             noBloco->filhos.push_back(pontoVirgula);
@@ -461,7 +463,7 @@ NoSintatico* bloco() {
             NoSintatico* tipoDeRetorno = tipo(); //pra resolver problemas como: function SomaSePar(a, b: integer): integer;
             if(!tipoDeRetorno){
                 delete noBloco;
-                cout<<"Erro sintatico: funcao Bloco function, tipo de retorno da funcao e invalido.\n";
+                cout<<"Erro sintatico: funcao Bloco procedure/function, tipo de retorno da funcao e invalido.\n";
                 return nullptr;
             }
             noBloco->filhos.push_back(tipoDeRetorno);
@@ -598,7 +600,7 @@ NoSintatico* tipo() {
         noTipo->filhos.push_back(terminal("Palavra Reservada"));
         return noTipo;
     } 
-    //Se não, verifica se é um identificador (tipo customizado)
+    //verifica se é um identificador (tipo customizado)
     else if (atual().tipo == "Identificador") {
         noTipo->filhos.push_back(terminal("Identificador"));
         return noTipo;
@@ -726,7 +728,6 @@ NoSintatico* comando() { //usa lookahead para verificar se o comando tem rotulo 
 
 NoSintatico* comandoSemRotulo() {
     int checkpoint = pos;
-
     NoSintatico* noComandoSemRotulo = new NoSintatico("Comando Sem Rotulo");
 
     if (atual().tipo == "Identificador") {
@@ -772,7 +773,7 @@ NoSintatico* comandoSemRotulo() {
             if(!doisPontosIgual){
                 delete noComandoSemRotulo;
                 pos = checkpoint;
-                cout<<"Erro sintatico: funcao Comando sem Rotulo id, espera-se := apos id/]"<< atual().lexema << "   " << tokens[pos-1].lexema << "\n";
+                cout<<"Erro sintatico: funcao Comando sem Rotulo id, espera-se := apos id "<< atual().lexema << "   " << tokens[pos-1].lexema << "\n";
                 return nullptr;
             }
             noComandoSemRotulo->filhos.push_back(doisPontosIgual);
@@ -793,7 +794,7 @@ NoSintatico* comandoSemRotulo() {
             NoSintatico* noExpressao1 = expressao();
             if(!noExpressao1){
                 delete noComandoSemRotulo;
-                cout<<"Erro sintatico: funcao Comando sem Rotulo id, erro em execução de expressao() apos (\n";
+                cout<<"Erro sintatico: funcao Comando sem Rotulo id, erro ao executar expressao() apos (\n";
                 return nullptr;
             }
             noComandoSemRotulo->filhos.push_back(noExpressao1);
@@ -805,7 +806,7 @@ NoSintatico* comandoSemRotulo() {
                 if(!noExpressao2) { 
                     delete noComandoSemRotulo;
                     pos = checkpoint; 
-                    cout<<"Erro sintatico: funcao Comando sem Rotulo id, erro em execução de expressao() apos ,\n";
+                    cout<<"Erro sintatico: funcao Comando sem Rotulo id, erro ao executar expressao() apos ,\n";
                     return nullptr;
                 }
                 noComandoSemRotulo->filhos.push_back(noExpressao2);
@@ -857,7 +858,6 @@ NoSintatico* comandoSemRotulo() {
                     return nullptr;
                 }
             }else {
-                // Erro: Esperava 'then'
                 delete noComandoSemRotulo;
                 pos = checkpoint;
                 cout<<"Erro sintatico: funcao Comando sem Rotulo if, espera-se 'then'\n";
@@ -865,9 +865,9 @@ NoSintatico* comandoSemRotulo() {
             }
             
         }
-        delete noComandoSemRotulo; // Este delete é para o caso de noExpressao falhar
+        delete noComandoSemRotulo; //para o caso de noExpressao falhar
         pos = checkpoint;
-        cout<<"Erro sintatico: funcao Comando sem Rotulo if, erro na expressão da condicao.\n";
+        cout<<"Erro sintatico: funcao Comando sem Rotulo if, erro na expressao da condicao.\n";
         return nullptr;
 
     } else if (atual().lexema == "while") {
@@ -911,7 +911,7 @@ NoSintatico* comandoSemRotulo() {
         }
         delete noComandoSemRotulo;
         pos = checkpoint;
-        cout<<"Erro sintatico: funcao Comando sem Rotulo begin, espera-se end apos execução de comando()\n";
+        cout<<"Erro sintatico: funcao Comando sem Rotulo begin, espera-se end apos execucao de comando()\n";
         return nullptr;
 
     } else if (atual().lexema == "goto") {
@@ -924,7 +924,7 @@ NoSintatico* comandoSemRotulo() {
         }
         pos = checkpoint;
 
-    //bloco adicionado para write/read que não existia no diagrama, logo não funcionaria em um teste de pascal real
+    //bloco adicionado para write/read que não existia no diagrama, logo, não funcionaria em um teste de pascal real
     } else if (atual().lexema == "write" || atual().lexema == "read") {
         noComandoSemRotulo->filhos.push_back(terminal("Palavra Reservada"));
 
@@ -935,24 +935,23 @@ NoSintatico* comandoSemRotulo() {
         }
         noComandoSemRotulo->filhos.push_back(new NoSintatico("Simbolo Simples", "("));
 
-        //processar a lista de parâmetros (expressões)
-        NoSintatico* exprNode = expressao();
-        if (!exprNode) {
+        NoSintatico* exprNo = expressao();
+        if (!exprNo) {
             delete noComandoSemRotulo;
             cout << "Erro sintatico: expressao invalida dentro de '" << tokens[pos-2].lexema << "'\n";
             return nullptr;
         }
-        noComandoSemRotulo->filhos.push_back(exprNode);
+        noComandoSemRotulo->filhos.push_back(exprNo);
 
         while (atual().lexema == ",") {
             noComandoSemRotulo->filhos.push_back(terminal("Simbolo Simples", ","));
-            exprNode = expressao();
-            if (!exprNode) {
+            exprNo = expressao();
+            if (!exprNo) {
                 delete noComandoSemRotulo;
                 cout << "Erro sintatico: expressao invalida apos a virgula em '" << tokens[pos-3].lexema << "'\n";
                 return nullptr;
             }
-            noComandoSemRotulo->filhos.push_back(exprNode);
+            noComandoSemRotulo->filhos.push_back(exprNo);
         }
         if (!terminal("Simbolo Simples", ")")) {
             delete noComandoSemRotulo;
@@ -1111,7 +1110,7 @@ NoSintatico* fator() {
         NoSintatico* exp = expressao();
         if(!exp){
             delete noFator;
-            cout<<"Erro sintatico: funcao Fator (, erro ao executar expressao()\n";
+            cout<<"Erro sintatico: funcao Fator '(', erro ao executar expressao()\n";
             return nullptr;
         }
         noFator->filhos.push_back(exp);
@@ -1122,7 +1121,7 @@ NoSintatico* fator() {
         }
         
         delete noFator;
-        cout<<"Erro sintatico: funcao Fator (, espera-se )\n";
+        cout<<"Erro sintatico: funcao Fator '(', espera-se )\n";
     }
 
     if(atual().lexema == "not"){
