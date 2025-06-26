@@ -1,4 +1,4 @@
-//Analoiador léxico e sintático - Marielly e Rayssa
+//Analisador léxico e sintático - Marielly e Rayssa
 
 #include <iostream>
 #include <iomanip> // Para formatação da saída
