@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "*.dbclient-js": "javascript",
+        "new": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "iomanip": "cpp",
+        "iostream": "cpp",
+        "random": "cpp",
+        "unordered_set": "cpp",
+        "iosfwd": "cpp"
+    }
+}

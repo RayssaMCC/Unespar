@@ -147,7 +147,7 @@ vector<Token> analisar(string& codigo) {
 }
 
 int main() {
-    ifstream entrada("C:\\Users\\rayss\\OneDrive\\Unespar\\Disciplinas\\Compiladores\\Analisador_Lexico\\entrada.txt"); // abre arquivo de entrada
+    ifstream entrada("entrada.txt"); // abre arquivo de entrada
     ofstream saida("tabela_simbolos.txt"); // cria arquivo de saída
 
     if (!entrada.is_open()) {
