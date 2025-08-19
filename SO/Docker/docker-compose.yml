@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  hello-service:
+    build: .
+    container_name: hello-container
+    tty: true
+    command: tail -f /dev/null
