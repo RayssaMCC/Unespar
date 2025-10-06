@@ -5,6 +5,8 @@
 *.xlsx
 *.txt
 *.pdf
+*.png
+*.asta
 **/bin/*
 1 Ano - 2023/Circuitos/*
 1 Ano - 2023/Direitos humanos/*
