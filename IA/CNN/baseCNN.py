@@ -27,8 +27,8 @@ train_dir = os.path.join(base_dir, 'train')
 validation_dir = os.path.join(base_dir, 'validation')
 
 # 2. Criar datasets de treino e teste
-IMG_SIZE = (150, 150)
-BATCH_SIZE = 32
+IMG_SIZE = (150, 150) # Padroniza o tamanho das imagens (pode causar distorção nelas)
+BATCH_SIZE = 32  # Lotes, quantidade de imagens processadas antes de atualizar o modelo (geralmente 32 ou 64)
 
 train_ds = tf.keras.utils.image_dataset_from_directory(
     train_dir,
@@ -61,8 +61,33 @@ AUTOTUNE = tf.data.AUTOTUNE
 train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
 test_ds = test_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
-# 5. Criar modelo LeNet
+# 5. Criar modelo LeNet (seguindo infos do slide) 
+# testar com relu no lugar da sigmoid
 model = tf.keras.Sequential([
+    tf.keras.layers.Conv2D(6, kernel_size=(5, 5), activation='sigmoid', padding='same'),
+    tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+    tf.keras.layers.Conv2D(16, kernel_size=(5, 5), activation='sigmoid'),
+    tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(120, activation='sigmoid'),
+    tf.keras.layers.Dense(84, activation='sigmoid'),
+    tf.keras.layers.Dense(2, activation='softmax')
+])
+
+# Modelo AlexNet
+model = tf.keras.Sequential([
+    tf.keras.layers.Conv2D(96, kernel_size=(11, 11), strides=(4, 4), activation='relu'),
+    tf.keras.layers.MaxPooling2D(pool_size=(3, 3), strides=(2, 2)),
+    tf.keras.layers.Conv2D(256, kernel_size=(5, 5), activation='relu'),
+    tf.keras.layers.MaxPooling2D(pool_size=(3, 3), strides=(2, 2)),
+    tf.keras.layers.Conv2D(384, kernel_size=(3, 3), activation='relu'),
+    tf.keras.layers.Conv2D(384, kernel_size=(3, 3), activation='relu'),
+    tf.keras.layers.Conv2D(256, kernel_size=(3, 3), activation='relu'),
+    tf.keras.layers.MaxPooling2D(pool_size=(3, 3), strides=(2, 2)),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(4096, activation='relu', dropout=0.5),
+    tf.keras.layers.Dense(4096, activation='relu', dropout=0.5),
+    tf.keras.layers.Dense(2, activation='softmax')
 ])
 
 # Configurar otimizador com taxa de aprendizagem específica
