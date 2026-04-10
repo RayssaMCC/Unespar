@@ -1,4 +1,4 @@
-//Analisador léxico e sintático - Marielly e Rayssa
+//Analisador léxico e sintático
 
 #include <iostream>
 #include <iomanip> // Para formatação da saída
@@ -231,21 +231,21 @@ NoSintatico* programa() {
     NoSintatico* noPrograma = new NoSintatico("programa"); //no Raiz.
 
     NoSintatico* no = terminal("Palavra Reservada", "Program");
-    if (!no){ 
-        delete noPrograma; 
+    if (!no){
+        delete noPrograma;
         cout<<"Erro sintatico: funcao prorama 'Programa'\n";
-        return nullptr; 
+        return nullptr;
     }
     noPrograma->filhos.push_back(no);
 
     NoSintatico* id = terminal("Identificador");
-    if (!id){ 
-        delete noPrograma; 
+    if (!id){
+        delete noPrograma;
         cout<<"Erro sintatico: funcao programa espera-se o 1 id\n";
-        return nullptr; 
+        return nullptr;
     }
     noPrograma->filhos.push_back(id);
-    
+
     NoSintatico* simbSimples = terminal("Simbolo Simples", "(");
     if (simbSimples){
         noPrograma->filhos.push_back(simbSimples);
@@ -255,9 +255,9 @@ NoSintatico* programa() {
             while(terminal("Simbolo Simples", ",")) {
                 noPrograma->filhos.push_back(terminal("Simbolo Simples", ","));
                 NoSintatico* id_lista = terminal("Identificador");
-                if(!id_lista){ 
-                    delete noPrograma; 
-                    return nullptr; 
+                if(!id_lista){
+                    delete noPrograma;
+                    return nullptr;
                 }
                 noPrograma->filhos.push_back(id_lista);
             }
@@ -267,35 +267,35 @@ NoSintatico* programa() {
             return nullptr;
         }
         NoSintatico* simbSimples2 = terminal("Simbolo Simples", ")");
-        if (!simbSimples2){ 
-            delete noPrograma; 
+        if (!simbSimples2){
+            delete noPrograma;
             cout<< "Erro sintatico: funcao programa, espera-se um )\n";
-            return nullptr; 
+            return nullptr;
         }
         noPrograma->filhos.push_back(simbSimples2);
     }
 
     NoSintatico* pontoVirgula = terminal("Simbolo Simples", ";");
-    if (!pontoVirgula){ 
-        delete noPrograma; 
+    if (!pontoVirgula){
+        delete noPrograma;
         cout<< "Erro sintatico: funcao programa, espera-se ; apos o id\n";
-        return nullptr; 
+        return nullptr;
     }
     noPrograma->filhos.push_back(pontoVirgula);
-    
+
     NoSintatico* noBloco = bloco();
-    if (!noBloco){ 
-        delete noPrograma; 
+    if (!noBloco){
+        delete noPrograma;
         cout<< "Erro sintatico: funcao programa, erro ao percorrer bloco\n";
-        return nullptr; 
+        return nullptr;
     }
     no->filhos.push_back(noBloco);
 
     NoSintatico* ponto = terminal("Simbolo Simples", ".");
-    if (!ponto){ 
-        delete noPrograma; 
+    if (!ponto){
+        delete noPrograma;
         cout<< "Erro sintatico: funcao programa, espera-se .\n";
-        return nullptr; 
+        return nullptr;
     }
     noPrograma->filhos.push_back(ponto);
     return noPrograma;
@@ -379,7 +379,7 @@ NoSintatico* bloco() {
             noBloco->filhos.push_back(pontoVirgula);
         }while(atual().tipo == "Identificador");
     }
-    
+
     if(atual().lexema == "var"){
         noBloco->filhos.push_back(terminal("Palavra Reservada"));
 
@@ -497,24 +497,24 @@ NoSintatico* bloco() {
     if (atual().lexema == "begin") {
         noBloco->filhos.push_back(terminal("Palavra Reservada"));
         NoSintatico* cmd = comando();
-        if (!cmd) { 
-            delete noBloco; 
-            return nullptr; 
+        if (!cmd) {
+            delete noBloco;
+            return nullptr;
         }
         noBloco->filhos.push_back(cmd);
         while(atual().lexema == ";") {
             noBloco->filhos.push_back(terminal("Simbolo Simples", ";"));
             cmd = comando();
-            if (!cmd) { 
-                delete noBloco; 
+            if (!cmd) {
+                delete noBloco;
                 cout<<"Erro sintatico: funcao Bloco, erro ao executar comando()\n";
-                return nullptr; 
+                return nullptr;
             }
             noBloco->filhos.push_back(cmd);
         }
-        if (!terminal("Palavra Reservada", "end")) { 
-            delete noBloco; 
-            return nullptr; 
+        if (!terminal("Palavra Reservada", "end")) {
+            delete noBloco;
+            return nullptr;
         }
         return noBloco;
     }
@@ -542,7 +542,7 @@ NoSintatico* tipo() {
                 return nullptr;
             }
             noTipo->filhos.push_back(num);
-            
+
             NoSintatico* ponto1 = terminal("Simbolo Simples", ".");
             if(!ponto1){
                 delete noTipo;
@@ -568,7 +568,7 @@ NoSintatico* tipo() {
             }
             noTipo->filhos.push_back(num2);
         }
-        
+
         NoSintatico* fechaColchete = terminal("Simbolo Simples", "]");
         if(!fechaColchete){
             delete noTipo;
@@ -599,12 +599,12 @@ NoSintatico* tipo() {
     else if (atual().tipo == "Palavra Reservada" && (atual().lexema == "integer" || atual().lexema == "boolean" || atual().lexema == "double")) {
         noTipo->filhos.push_back(terminal("Palavra Reservada"));
         return noTipo;
-    } 
+    }
     //verifica se é um identificador (tipo customizado)
     else if (atual().tipo == "Identificador") {
         noTipo->filhos.push_back(terminal("Identificador"));
         return noTipo;
-    } 
+    }
     else {
         delete noTipo;
         cout << "Erro sintatico: funcao Tipo, espera-se 'array', um identificador de tipo ou um tipo primitivo (integer, boolean, etc.).\n";
@@ -704,7 +704,7 @@ NoSintatico* parametrosFormais(){
 }
 
 NoSintatico* comando() { //usa lookahead para verificar se o comando tem rotulo ou não, com backtracking quebrava
-    if (atual().tipo == "Numero" && tokens[pos + 1].lexema == ":") { 
+    if (atual().tipo == "Numero" && tokens[pos + 1].lexema == ":") {
         NoSintatico* rotulo = terminal("Numero");
         NoSintatico* doisPontos = terminal("Simbolo Simples", ":");
 
@@ -803,9 +803,9 @@ NoSintatico* comandoSemRotulo() {
                 noComandoSemRotulo->filhos.push_back(terminal("Simbolo Simples", ","));
 
                 NoSintatico* noExpressao2 = expressao();
-                if(!noExpressao2) { 
+                if(!noExpressao2) {
                     delete noComandoSemRotulo;
-                    pos = checkpoint; 
+                    pos = checkpoint;
                     cout<<"Erro sintatico: funcao Comando sem Rotulo id, erro ao executar expressao() apos ,\n";
                     return nullptr;
                 }
@@ -842,11 +842,11 @@ NoSintatico* comandoSemRotulo() {
                     if (palavraElse) {
                         noComandoSemRotulo->filhos.push_back(palavraElse);
                         NoSintatico* cmdElse = comandoSemRotulo();
-                        if (!cmdElse) { 
-                            delete noComandoSemRotulo; 
+                        if (!cmdElse) {
+                            delete noComandoSemRotulo;
                             pos = checkpoint;
-                            cout<<"Erro sintatico: funcao Comando sem Rotulo if, erro na recursao\n"; 
-                            return nullptr; 
+                            cout<<"Erro sintatico: funcao Comando sem Rotulo if, erro na recursao\n";
+                            return nullptr;
                         }
                         noComandoSemRotulo->filhos.push_back(cmdElse);
                     }
@@ -863,7 +863,7 @@ NoSintatico* comandoSemRotulo() {
                 cout<<"Erro sintatico: funcao Comando sem Rotulo if, espera-se 'then'\n";
                 return nullptr;
             }
-            
+
         }
         delete noComandoSemRotulo; //para o caso de noExpressao falhar
         pos = checkpoint;
@@ -884,7 +884,7 @@ NoSintatico* comandoSemRotulo() {
         pos = checkpoint;
     } else if (atual().lexema == "begin") {
         noComandoSemRotulo->filhos.push_back(terminal("Palavra Reservada"));
-        
+
         NoSintatico* noComando = comando();
         if(!noComando){
             delete noComandoSemRotulo;
@@ -998,9 +998,9 @@ NoSintatico* expressaoSimples() {
             no->filhos.push_back(esq);
             no->filhos.push_back(dir);
             esq = no;
-        } else { 
-            delete esq; 
-            return nullptr; 
+        } else {
+            delete esq;
+            return nullptr;
         }
     }
     return esq;
@@ -1018,9 +1018,9 @@ NoSintatico* termo() {
             no->filhos.push_back(esq);
             no->filhos.push_back(dir);
             esq = no;
-        } else { 
-            delete esq; 
-            return nullptr; 
+        } else {
+            delete esq;
+            return nullptr;
         }
     }
     return esq;
@@ -1045,7 +1045,7 @@ NoSintatico* fator() {
 
             while(atual().lexema == ","){
                 noFator->filhos.push_back(terminal("Simbolo Simples", ","));
-                
+
                 Exp = expressao();
                 if(!Exp){
                     delete noFator;
@@ -1102,7 +1102,7 @@ NoSintatico* fator() {
     if (atual().tipo == "Numero"){
         noFator->filhos.push_back(terminal("Numero"));
         return noFator;
-    } 
+    }
 
     if (atual().lexema == "(") {
         noFator->filhos.push_back(terminal("Simbolo Simples", "("));
@@ -1119,7 +1119,7 @@ NoSintatico* fator() {
             noFator->filhos.push_back(terminal("Simbolo Simples", ")"));
             return noFator;
         }
-        
+
         delete noFator;
         cout<<"Erro sintatico: funcao Fator '(', espera-se )\n";
     }

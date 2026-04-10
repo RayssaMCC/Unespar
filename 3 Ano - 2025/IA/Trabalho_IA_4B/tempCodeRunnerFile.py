@@ -1,0 +1,1 @@
+Injustiça hídrica em período de escassez

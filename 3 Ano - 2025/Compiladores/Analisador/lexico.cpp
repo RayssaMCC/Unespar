@@ -1,4 +1,4 @@
-//Analisador léxico - Marielly e Rayssa
+//Analisador léxico
 
 #include <iostream>
 #include <fstream>
@@ -72,13 +72,13 @@ vector<Token> analisar(string& codigo) {
 
         if (codigo[i] == '\n') { // Atualiza contador de linhas
 
-            linha++; 
-            i++; 
-            continue; 
-        } 
+            linha++;
+            i++;
+            continue;
+        }
         if (isspace(codigo[i]) && c != '\n') { // Ignora espaços em branco
-            i++;  
-            continue; 
+            i++;
+            continue;
         }
 
         // E1 → E2 (Identificador ou palavra reservada)
