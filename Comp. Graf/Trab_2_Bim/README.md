@@ -37,7 +37,7 @@ pip install glfw PyOpenGL numpy
 python Trab_curva_bezier.py
 ```
 
-> **Nota:** Dependendo da configuração do seu sistema operacional, o comando pode ser `python3`.
+> **Nota:** Dependendo da configuração do sistema operacional, o comando pode ser `python3`.
 
 ## 🎮 Controles da Aplicação
 
