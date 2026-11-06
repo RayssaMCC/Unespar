@@ -1,0 +1,2 @@
+﻿modelo,acuracia,precisao_macro,recall_macro,f1_macro,auc_roc_macro_ovr,registros_treino,registros_teste,projetos_treino,projetos_teste,projetos_compartilhados
+Árvore de Decisão,0.4587118712886363,0.5349637385868621,0.4586661149402785,0.4743169371782337,0.5958662054221843,47008,19703,24,7,0

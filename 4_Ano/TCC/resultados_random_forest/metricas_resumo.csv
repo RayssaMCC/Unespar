@@ -1,0 +1,2 @@
+﻿modelo,acuracia,precisao_macro,recall_macro,f1_macro,auc_roc_macro_ovr,registros_treino,registros_teste,projetos_treino,projetos_teste,projetos_compartilhados
+Random Forest,0.5341318580926763,0.5766643686110536,0.5439194861608759,0.47727990150051136,0.6874181319917002,47008,19703,24,7,0

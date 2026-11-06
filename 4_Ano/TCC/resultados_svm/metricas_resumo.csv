@@ -1,0 +1,2 @@
+﻿modelo,acuracia,precisao_macro,recall_macro,f1_macro,auc_roc_macro_ovr,registros_treino,registros_teste,projetos_treino,projetos_teste,projetos_compartilhados
+SVM (Support Vector Machine),0.579556412729026,0.5613928364700672,0.5833311958308821,0.5229168813624907,0.7261027280066082,47008,19703,24,7,0

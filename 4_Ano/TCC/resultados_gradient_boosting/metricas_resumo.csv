@@ -1,0 +1,2 @@
+﻿modelo,acuracia,precisao_macro,recall_macro,f1_macro,auc_roc_macro_ovr,registros_treino,registros_teste,projetos_treino,projetos_teste,projetos_compartilhados
+Gradient Boosting,0.5214941887022281,0.42623365460731016,0.5307338178197646,0.4402573757258191,0.6844542908675529,47008,19703,24,7,0
